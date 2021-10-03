@@ -26,5 +26,3 @@ Tampak Kanan
 - Tampak bawah (*canvas* sebelah kanan)
 
 <img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/hasil.png" width="700">
-
-**Live demo**: [di sini](https://https://cg2021d.github.io/tugas-1-ThomasFel "Goto di sini")
