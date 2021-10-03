@@ -14,7 +14,7 @@ Tampak Bawah
 
 Tampak Kiri
 
-<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/kiri.jpg" height="400">
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/kiri.jpg" height="400" style="transform: rotate(90deg)">
 
 Tampak Kanan
 
