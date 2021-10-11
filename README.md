@@ -2,7 +2,9 @@
 
 05111940000062 - Thomas Felix B.
 
-## Dasi Kupu-Kupu
+## WebGL
+
+### Barang: Dasi Kupu-Kupu
 
 Tampak Atas
 
@@ -27,4 +29,12 @@ Tampak Kanan
 
 <img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/hasil.png" width="700">
 
-### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel "Goto di sini")
+### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/WebGL/ "Goto di sini")
+
+## Three.js
+
+## Hasil
+
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.png" width="700">
+
+### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Three.js/ "Goto di sini")
