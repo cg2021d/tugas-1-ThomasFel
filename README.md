@@ -39,6 +39,6 @@ Selain itu, juga memakai **GridHelper** untuk mendefinisikan *grid* atau *array*
 
 ## Hasil
 
-<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.gif" width="700">
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.gif">
 
 ### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Three.js/ "Goto di sini")
