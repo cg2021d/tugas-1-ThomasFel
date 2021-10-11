@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Mencoba Three.js</title>
+        <script src="js/three.min.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <link rel="icon" href="javascript.ico">
+        <style>
+            body {
+                margin: 0;
+                background-color: black;
+                color: white;
+                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+
+            select {
+                margin-bottom: 10px;
+                display: block;
+                border: 1px solid #000;
+            }
+        </style>
+    </head>
+    <body>
+        <center>
+            <h1>Mencoba Three.js</h1>
+            <h3>05111940000062 - Thomas Felix B.</h3>
+
+            <select name="light" id="light">
+                <option value="0">Directional Light</option>
+                <option value="1">Ambient Light</option>
+                <option value="2">Point Light</option>
+                <option value="3">Hemisphere Light</option>
+                <option value="4">Spotlight</option>
+            </select>
+        </center>
+    </body>
+
+    <script>
+        let scene, camera, renderer, cube, cone, torus;
+
+        let createCube = () => {
+            let geometry = new THREE.BoxGeometry(2, 2, 2);
+            let material = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x9ff });
+            cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+        };
+
+        let createCone = () => {
+            let geometry = new THREE.ConeGeometry(1, 3, 9);
+            let material = new THREE.MeshToonMaterial({ color: 0x0077ff })
+            cone = new THREE.Mesh(geometry, material);
+            scene.add(cone);
+        };
+
+        let createTorus = () => {
+            let geometry = new THREE.TorusGeometry(1, 0.5, 10, 25);
+            let material = new THREE.MeshNormalMaterial({ wireframe: false })
+            torus = new THREE.Mesh(geometry, material);
+            scene.add(torus);
+        };
+
+        let createSphere = () => {
+            let geometry = new THREE.SphereGeometry(1, 32, 32);
+            let texture = new THREE.TextureLoader().load('./mars.jpg');
+            let material = new THREE.MeshPhongMaterial();
+
+            material.map = new THREE.TextureLoader().load('texture/diffuse.jpg');
+            material.bumpMap = new THREE.TextureLoader().load('texture/bump.jpg');     
+            material.bumpScale = 0.015;
+            
+            sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+        };
+
+        let createCylinder = () => {
+            let geometry = new THREE.CylinderGeometry(1, 1, 2, 20);
+            let material = new THREE.MeshLambertMaterial({ color: 0xf404ea, emissive: 0x2626 });
+            cylinder = new THREE.Mesh(geometry, material);
+            scene.add(cylinder);
+        };
+
+        let createIcosahedron = () => {
+            let geometry = new THREE.IcosahedronGeometry(2);
+            let material = new THREE.MeshPhysicalMaterial({ color: 0xffffff });
+
+            icosahedron = new THREE.Mesh(geometry, material);
+            scene.add(icosahedron);
+        };
+
+        let createTorusKnot = () => {
+            let geometry = new THREE.TorusKnotGeometry(0.75, 0.25, 100, 16);
+            let material = new THREE.MeshBasicMaterial( { color: 0xff0000} );
+            torusKnot = new THREE.Mesh(geometry, material);
+            scene.add(torusKnot);
+        };
+
+        let createRing = () => {
+            let geometry = new THREE.RingGeometry(0.5, 1, 32);
+            let material = new THREE.MeshToonMaterial({ color: 0xC89595 });
+            ring = new THREE.Mesh(geometry, material);
+            scene.add(ring);
+        };
+ 
+        let lightsChange = () => {
+            const dLight = new THREE.DirectionalLight(0xffffff, 1);
+            dLight.position.set(9, 6, 9).normalize();
+            const aLight = new THREE.AmbientLight(0xffffff, 1);
+            aLight.position.set(9, 6, 9);
+            const pLight = new THREE.PointLight(0xffffff, 1, 100);
+            pLight.position.set(9, 6, 9);
+            const hLight = new THREE.HemisphereLight(0xffffff, '#ffb703', 0.8);
+            hLight.position.set(9, 6, 9);
+            const sLight = new THREE.SpotLight(0xffffff, 1, 50);
+            sLight.position.set(9, 6, 9);
+
+            const lights = [dLight, aLight, pLight, hLight, sLight];
+
+            lights.forEach((obj) => scene.add(obj));
+
+            lights.forEach((light) => {
+                light.visible = false;
+            });
+            lights[0].visible = true;
+
+            const selectedLight = document.getElementById('light');
+            selectedLight.addEventListener('change', (e) => {
+                const selected = e.target.value;
+                lights.forEach((light) => {
+                    light.visible = false;
+                });
+                lights[selected].visible = true;
+            });
+        };
+
+        let init = () => {
+            // 1. Create the scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0f0f0f);
+
+            // 2. Create an locate the camera
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 10;
+
+            lightsChange();
+
+            // 3. Create an locate the object on the scene
+            createCube();
+            createCone();
+            createTorus();
+            createSphere();
+            createCylinder();
+            createIcosahedron();
+            createTorusKnot();
+            createRing();
+
+            // 4. Create the renderer
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight );
+            
+            document.body.appendChild(renderer.domElement);
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            renderer.render(scene, camera, controls);
+
+            // 5. Grid helper
+            const gridHelper = new THREE.GridHelper(100, 50);
+            scene.add(gridHelper);
+        };
+
+        let animate = () => {
+            // CUBE
+            cube.position.x = 0;
+            cube.position.y = -2.5;
+            cube.rotation.x += 0.02;
+            cube.rotation.y -= 0.02;
+            cube.rotation.z += 0.02;
+
+            // CONE
+            cone.position.x = 0;
+            cone.position.y = 2.5;
+            cone.rotation.x -= 0.02;
+            cone.rotation.y += 0.02;
+            cone.rotation.z -= 0.02;
+
+            // TORUS
+            torus.position.x = -6;
+            torus.position.y = 2.5;
+            torus.rotation.x += 0.02;
+            torus.rotation.y += 0.02;
+            torus.rotation.z += 0.02;
+
+            // SPHERE - MARS
+            sphere.position.x = 6;
+            sphere.position.y = 2.5;
+            sphere.rotation.x -= 0.02;
+            sphere.rotation.y -= 0.02;
+            sphere.rotation.z -= 0.02;
+
+            // CYLINDER
+            cylinder.position.x = 6;
+            cylinder.position.y = -2.5;
+            cylinder.rotation.x += 0.02;
+            cylinder.rotation.y += 0.02;
+            cylinder.rotation.z -= 0.02;
+
+            // ICOSAHEDRON
+            icosahedron.position.x = -6;
+            icosahedron.position.y = -2.5;
+            icosahedron.rotation.x -= 0.02;
+            icosahedron.rotation.y -= 0.02;
+            icosahedron.rotation.z += 0.02;
+
+            // TORUS KNOT
+            torusKnot.position.x = 12;
+            torusKnot.position.y = -2.5;
+            torusKnot.rotation.x += 0.02;
+            torusKnot.rotation.y -= 0.02;
+            torusKnot.rotation.z -= 0.02;
+
+            // RING
+            ring.position.x = 12;
+            ring.position.y = 2.5;
+            ring.rotation.x -= 0.02;
+            ring.rotation.y += 0.02;
+            ring.rotation.z += 0.02;
+            
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        };
+
+        init();
+        animate();
+    </script>
+</html>
