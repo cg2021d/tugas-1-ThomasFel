@@ -33,8 +33,12 @@ Tampak Kanan
 
 ## Three.js
 
+Dalam tugas ini menggunakan **Three.js** dengan mengaplikasikan beberapa *geometry* seperti **Box**, **Cone**, **Torus**, **Sphere**, dan lain-lain. Ada pula beberapa *material* yang digunakan: **MeshBasic**, **MeshToon**, **MeshNormal**, **MeshPong**, dan sebagainya. Dan juga penggunaan beberapa jenis *lighting* untuk mengatur pencahayaan, yaitu **Directional**, **Ambient**, **Point**, **Hemisphere**, dan **Spot**.
+
+Selain itu, juga memakai **GridHelper** untuk mendefinisikan *grid* atau *array* garis 2D. Dan terakhir **OrbitControls** untuk membuat kita bebas menggerakkan kamera yang mengarah ke objek.
+
 ## Hasil
 
-<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.png" width="700">
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.gif" width="700">
 
 ### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Three.js/ "Goto di sini")
