@@ -27,7 +27,7 @@ Tampak Kanan
 - Tampak atas (*canvas* sebelah kiri)
 - Tampak bawah (*canvas* sebelah kanan)
 
-<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.gif">
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss1.gif">
 
 ### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Tugas%201%20-%20WebGL/ "Goto di sini")
 
