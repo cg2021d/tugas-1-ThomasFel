@@ -27,7 +27,7 @@ Tampak Kanan
 - Tampak atas (*canvas* sebelah kiri)
 - Tampak bawah (*canvas* sebelah kanan)
 
-<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/hasil.png" width="700">
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.gif">
 
 ### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Tugas%201%20-%20WebGL/ "Goto di sini")
 
@@ -39,7 +39,7 @@ Selain itu, juga memakai **GridHelper** untuk mendefinisikan *grid* atau *array*
 
 ## Hasil
 
-<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss.gif">
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss2.gif">
 
 ### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Tugas%202%20-%20Mencoba%20Three.js/ "Goto di sini")
 
@@ -58,6 +58,6 @@ Dalam tugas ini membuat objek baru yang muncul di posisi dan mempunyai warna sec
 
 ## Hasil
 
-<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss2.gif">
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss3.gif">
 
 ### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Tugas%203%20-%20User%20Interactive%20(Three.js)/ "Goto di sini")
