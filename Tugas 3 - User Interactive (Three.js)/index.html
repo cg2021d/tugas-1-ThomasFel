@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Three.js - User Interaction</title>
+        <script src="js/three.min.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <link rel="icon" href="javascript.ico">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+
+            .scoreboard {
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                top: 0;
+                font-size: 24px;
+                color: #ffffff;
+            }
+
+            .scoreboard2 {
+                position: absolute;
+                display: flex;
+                width: 100%;
+                top: 0;
+                font-size: 16px;
+                color: #ffffff;
+            }
+            
+            .text-glowing {
+                text-shadow: 0 0 10px #0088ff, 0 0 30px #0088ff,0 0 50px #0088ff,0 0 70px #0088ff;
+            }
+
+            .container-name {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                bottom: 1.5rem;
+                right: 1.5rem;
+                margin: 0;
+                font-weight: 800;
+                font-size: 18px;
+                color: #ffffff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="scoreboard">
+            <h3 class="text-glowing" style="margin: 24px 0 0;">Score<h3 id="score_value" style="margin: 0;">0</h3></h3>
+        </div>
+
+        <div class="scoreboard2">
+            <h3 class="text-glowing" style="margin: 24px 0 0 24px;">Highscore: <h3 id="highscore_value" class="text-glowing" style="margin: 24px 0 0 10px">0</h3></h3>
+        </div>
+
+        <div class="container-name">
+            <p>Thomas Felix Brilliant <br/> 05111940000062 | Grafkom (D)</p>
+        </div>
+    </body>
+
+    <script>
+        let scene, camera, renderer, controls;
+        let rayCast, mouse;
+        let selected, highscore, score;
+        let cubesCount = 0;
+        let speed = 5000; // millisecond
+        
+        const speedAccel = 500;
+        const minSpeed = 2000;
+        const maxCube = 200;
+        const colors = [
+            0x13BD40,
+            0xBD1313,
+            0x1813BA,
+            0xBD13A6,
+            0xB8B811,
+            0x13BDBD,
+        ];
+
+        /**
+         * Generate cubes
+         */
+        const generateCube = () => {
+            const colorsRandom = colors[Math.floor(randomInt(0, 6))];
+            const geometry = new THREE.BoxGeometry(3, 3, 3);
+            const material = new THREE.MeshToonMaterial({ color: colorsRandom });
+            const cube = new THREE.Mesh(geometry, material);
+
+            cube.position.set(randomInt(-20, 20), randomInt(-20, 20), randomInt(-20, 20));
+            scene.add(cube);
+            cubesCount += 1;
+
+            return cube;
+        };
+
+        const randomInt = (from, until) => {
+            return from + Math.random() * (until - from);
+        };
+
+        const generateCubeLoop = (num = 5) => {
+            if (cubesCount <= maxCube - num) {
+                Array(num).fill(0).forEach(generateCube);
+
+                if (speed >= minSpeed + speedAccel) {
+                    speed -= speedAccel;
+                }
+            }
+
+            setTimeout(generateCubeLoop, speed);
+        };
+
+        /**
+         * For selected cube
+         */
+        const deselect = () => {
+            if (selected == null) {
+                return;
+            }
+
+            selected.obj.material.color.setHex(selected.init_color);
+            selected = null;
+        };
+
+        const dispose = (object) => {
+            object.geometry.dispose();
+            object.material.dispose();
+            scene.remove(object);
+            renderer.renderLists.dispose();
+        };
+
+        const toggleColor = (once = false) => {
+            if (selected) {
+                const currentColor = selected.obj.material.color.getHex();
+
+                selected.obj.material.color.setHex(
+                    (currentColor === 0xffffff) ? selected.init_color : 0xffffff
+                );
+            }
+
+            if (once) {
+                return;
+            }
+        };
+
+        /**
+         * Raycast
+         */
+        document.addEventListener("click", (e) => {
+            mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (e.clientY / window.innerHeight) * 2 + 1;
+            rayCast.setFromCamera(mouse, camera);
+
+            let intersects = rayCast.intersectObjects(scene.children, false);
+
+            if (!intersects[0]) {
+                deselect();
+                return;
+            }
+
+            let firstObject = intersects[0].object;
+
+            if (selected != null) {
+                compareCube(firstObject);
+                return;
+            }
+
+            selected = ({
+                obj: firstObject,
+                init_color: firstObject.material.color.getHex(),
+            });
+
+            toggleColor(true);
+        });
+
+        const compareCube = (objectCube) => {
+            if (selected.obj.uuid === objectCube.uuid) {
+                return;
+            }
+
+            const first = selected.init_color;
+            const second = objectCube.material.color.getHex();
+
+            const currentScore = parseInt(score.textContent);
+            const highScore = parseInt(highscore.textContent);
+
+            let newScore;
+
+            if (first === second) {
+                dispose(selected.obj);
+                dispose(objectCube);
+                
+                cubesCount -= 2;
+                newScore = currentScore + 100;
+            }
+
+            else {
+                newScore = currentScore - 25;
+            }
+
+            score.textContent = '' + ((newScore >= 0) ? newScore : 0);
+            highscore.textContent = '' + ((newScore > highScore) ? newScore : highScore);
+            deselect();
+        };
+
+        /**
+         * Helper
+         */
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        }, false);
+        
+        /**
+         * Main function and loop
+         */
+        const init = () => {
+            // Init
+            score = document.querySelector('#score_value');
+            highscore = document.querySelector('#highscore_value');
+
+            // Create the scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x21252d);
+
+            // Create an locate the camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.y = 5;
+            camera.position.z = 50;
+
+            // Generate object
+            generateCubeLoop(69);
+
+            // Add lighting
+            const pLight = new THREE.PointLight(0xffffff, 1, 100);
+            pLight.position.set(0, 10, 4);
+            pLight.castShadow = true;
+            scene.add(pLight);
+
+            // Create the renderer
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            document.body.appendChild(renderer.domElement);
+            
+            // Create the controller
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            // Create the raycaster
+            rayCast = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+            mouse.setX(-1); mouse.setY(-1);
+
+            // For selected color
+            toggleColor();
+        };
+
+        const animate = () => {
+            renderer.render(scene, camera);
+            controls.update();
+            requestAnimationFrame(animate);
+        };
+        
+        init();
+        animate();
+    </script>
+</html>
