@@ -61,3 +61,13 @@ Dalam tugas ini membuat objek baru yang muncul di posisi dan mempunyai warna sec
 <img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss3.gif">
 
 ### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Tugas%203%20-%20User%20Interactive%20(Three.js)/ "Goto di sini")
+
+## Eksplorasi Fitur (Three.js)
+
+Dalam tugas ini mengeksplorasi fitur-fitur lain yang terdapat di **Three.js**, seperti panorama, *control*, *texture*, *shadow*, *fog*, *loading model*, dan *realistic reflective*.
+
+## Hasil
+
+<img src="https://github.com/cg2021d/tugas-1-ThomasFel/blob/main/img/ss4.gif">
+
+### Live demo: [di sini](https://cg2021d.github.io/tugas-1-ThomasFel/Tugas%204%20-%20Eksplorasi%20Fitur%20(Three.js)/ "Goto di sini")
